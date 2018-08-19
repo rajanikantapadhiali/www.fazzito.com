@@ -1,0 +1,132 @@
+*
+{
+	margin: 0%;
+	padding: 0%;
+	box-sizing: border-box;
+
+}
+
+nav {
+	height: 70px;
+	width: 100%;
+	background-color: aliceblue;
+	box-shadow: 0 0 10px grey;
+	position: fixed;
+	z-index: 1;
+}
+nav ul {
+	display: inline;
+}
+
+nav ul li {
+	list-style: none;
+	padding: 30px 20px;
+}
+
+nav ul li a {
+	text-decoration: none;
+	color: rgb(39, 95, 151);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+nav .linkl li {
+	float: left;
+}
+nav .linkr li {
+	float: right;
+}
+nav img {
+	width: 70px;
+	height: 70px;
+	margin-left: 150px;
+}
+
+#image{
+	display: none;
+}
+
+.spiner {
+    height: 100px;
+    width: 100px;
+    border: 20px solid gray;
+    border-top: 20px solid dodgerblue;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    position: absolute;
+	z-index: 5;
+	top: 50%;
+	left: 50%;
+}
+
+@keyframes spin {
+    100%{transform: rotate(360deg)}
+}
+
+#myAccount {
+	height:200px;
+	width:150px;
+	background-color:rgb(225, 226, 236);
+	margin-left: 1200px;
+	display: none;
+	margin-top: 70px;
+	position: absolute;
+	position: fixed;
+	z-index: 5;
+	animation: slideDown 0.3s linear;
+}
+
+@keyframes slideDown {
+	from{height: 0}
+	to{height: 200px;}
+}
+
+#myAccount ul li {
+	border-bottom:1px solid black;
+	padding:10px;
+	cursor: pointer;
+}
+
+#loginModal {
+	box-shadow: 0 0 50px black;
+	padding: 20px;
+	height:500px;
+	width:500px;
+	background-color:dodgerblue;
+	position: absolute;
+	left: -500px;
+	top:150px;
+	transition: 1s;
+	z-index: 2;
+}
+
+#signupModal {
+	box-shadow: 0 0 50px black;
+	padding: 20px;
+	height:500px;
+	width:500px;
+	background-color:dodgerblue;
+	position: absolute;
+	right: -500px;
+	top:150px;
+	transition: 1s;
+	z-index: 2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+footer .row div {
+	color: white;
+	font-size: 20px;
+	text-align: center;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}

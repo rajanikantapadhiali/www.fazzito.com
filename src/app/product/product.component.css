@@ -1,0 +1,37 @@
+#categoryNav {
+    background-color: rgb(39, 95, 151);
+    position: sticky;
+    top:70px;
+    z-index: 1;
+    display: flex;
+    margin-top: -2px;
+}
+
+#categoryNav div {
+    padding: 15px 20px;
+    color: aliceblue;
+    cursor: pointer;
+}
+
+#gridCategory {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+#selectedCategory {
+    height: 540px;
+    background-color: gainsboro;
+    position: fixed;
+    right: 0;
+}
+
+#item {
+    box-shadow: 5px 5px 15px gray;
+}
+
+#selectedCategory .card {
+    margin-top: 20px;
+    border: none;
+}

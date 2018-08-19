@@ -1,0 +1,22 @@
+.carousel-inner img {
+    width :100%;
+    height: auto;
+}
+carousel-control-prev, carousel-control-next span  {
+    background-color: black;
+    padding: 20px;
+}
+
+.col-sm-8 {
+    display:flex;
+    flex-wrap: wrap;
+    height: 550px;
+    overflow: auto;
+}
+.card {
+    height:200px;
+    width:277px;
+}
+.card:hover {
+    box-shadow: 0 0 15px gray;
+}

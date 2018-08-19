@@ -1,0 +1,68 @@
+<nav>
+    <ul class="linkl">
+        <li><a routerLink="home">HOME</a></li>
+        <li><a routerLink="menu">MENU</a></li>
+        <li><a routerLink="specialoffers">SPECIAL OFFERS</a></li>
+        <li><a routerLink="booktable">BOOK TABLE</a></li>
+    </ul>
+    <img src="../assets/image/Logo.png">
+    <ul class="linkr">
+        <li *ngIf="cart"><i class="fa fa-cart-arrow-down" style="font-size:20px"></i><a routerLink="cart">&nbsp;cart&nbsp;({{2}})</a></li>
+        <li (click)="myAccount()" *ngIf="cart"><span class="fa fa-user"></span><span style="color: rgb(39, 95, 151);font-family: Arial, Helvetica, sans-serif;cursor: pointer;">{{'
+                '+username}}</span></li>
+        <li (click)="showLogin()" *ngIf="!cart"><span style="color: rgb(39, 95, 151);font-family: Arial, Helvetica, sans-serif;cursor: pointer;">LOGIN</span></li>
+        <li><a routerLink="contact">CONTACT</a></li>
+        <li><a routerLink="mealplan">MEAL PLANS</a></li>
+    </ul>
+</nav>
+<div id="myAccount">
+    <ul style="list-style-type: none;padding:20px">
+        <li>My Account</li>
+        <li>My Order</li>
+        <li>My Plan</li>
+        <li (click)="logout()">Log Out</li>
+    </ul>
+</div>
+<br><br><br>
+<div *ngIf="showLoadingIndicator" class="spiner"></div>
+<router-outlet></router-outlet>
+<footer style="background-color: rgb(28, 93, 168)">
+    <img src="../assets/image/footer.png" style="width:100%;">
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <i style="font-size: 40px;margin-right: 10px" class="fa fa-phone"></i> <br> Desiged by RajkumarSoftware Private
+            Limited.<br> © 2016 All Rights Reserved by <a href="http://rajanikantapadhiali.github.io/www.rkprofile.in" style="color:white">RajkumarSoftware
+                Private Limited</a>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <i class="fa fa-envelope" style="font-size: 40px"></i><br>padhialirajanikanta@gmail.com</div>
+        <div class="col-md-4 col-sm-12">
+            <i class="fa fa-map" style="font-size: 40px"></i><br>Marathahalli, Bangalore, India</div>
+    </div>
+</footer>
+<div id="loginModal">
+    <h3 style="text-align:center">LogIn</h3><i style="float: right;font-size: 20px" class="fa fa-times" (click)="hideLogin()"></i><br>
+    <form #loginForm="ngForm">
+        <label for='username'>Enter First Name</label>
+        <input type="text" class="form-control" name="username" [(ngModel)]="username"><br>
+        <label for='password'>Enter Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="password"><br>
+        <input type="submit" class="btn btn-success form-control" value="submit" (click)="compareData(loginForm)"> new to
+        fazzito ? Plz...<span (click)="showSignup()" style="cursor: pointer;color: red">SignUp</span><br>
+        <img src="../assets/image/Logo.png" style="margin-left: 50%;transform: translate(-50%)">
+
+    </form>
+</div>
+
+<div id="signupModal">
+    <h3 style="text-align:center">SignUp</h3> <i style="float: right;font-size: 20px" class="fa fa-times" (click)="hideSignup()"></i><br>
+    <form #signupForm="ngForm">
+        <input type="text" class="form-control" name="firstname" [(ngModel)]="firstname" placeholder="Enter First Name"><br>
+        <input type="email" class="form-control" name="email" [(ngModel)]="email" placeholder="Enter E-mail"><br>
+        <input type="number" class="form-control" name="phone" [(ngModel)]="phone" placeholder="Enter Phone Nunmber"><br>
+        <input type="password" class="form-control" name="password" [(ngModel)]="password" placeholder="Enter Password"><br>
+        <input type="submit" class="btn btn-success form-control" value="submit" (click)="insertData(signupForm)"> Existing
+        User..? Plz...<span (click)="showLogin()" style="cursor: pointer;color: red">LogIn</span><br>
+        <img src="../assets/image/Logo.png" style="margin-left: 50%;transform: translate(-50%);height: 100px;width: 100px;">
+    </form>
+</div>

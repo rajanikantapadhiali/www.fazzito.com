@@ -1,0 +1,9 @@
+<h2 style="text-align:center">CATEGORIES</h2>
+<div *ngIf="!showLoadingIndicator" class="container-fluid" style="  display: grid;grid-template-columns: auto auto auto;grid-column-gap: 20px;grid-row-gap: 20px;">
+  <div *ngFor="let x of data.data" id="item">
+    <a [routerLink]="['/menu',x._id]"><img src="{{'https://fazzito.com/api'+ x.image.imageUrl}}">
+      <div style="position: absolute;top: 50px;left: 50px;padding: 15px 50px;background-color: white;opacity: 0.8;font-size: 20px;letter-spacing: 2px"><h4>{{x.categoryName}}</h4></div>
+    </a>
+  </div>
+
+</div>

@@ -1,0 +1,18 @@
+.card-header span {
+    margin-left: 200px;
+} 
+.card-header span:nth-child(1) {
+    margin-left: 100px;
+} 
+.card-body {
+    border-top: 2px solid blue;
+    border-bottom: 2px solid blue;
+}
+.card-footer {
+    border-bottom: 2px solid blue;
+}
+.card {
+    margin-bottom: 220px;
+    border: none;
+    margin-top: 50px;
+}
