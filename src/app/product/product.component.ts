@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../home/home.service';
 import { ActivatedRoute } from '@angular/router';
+import { AppService } from '../app.service';
 
 interface Product {
   categoryName: string,
@@ -28,8 +29,8 @@ export class ProductsComponent implements OnInit {
   quantity: number = 1;
   plusminus: boolean = false;
 
-
-  constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute) {
+  constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
+    private _appservice: AppService) {
     this.id = this.activatedRoute.snapshot.params['_id'];
   }
 
@@ -43,7 +44,10 @@ export class ProductsComponent implements OnInit {
           };
         })
       });
+  }
 
+  callme() {
+    this._appservice.eventGenerate('clicked');
   }
 
   showProducts(category): void {
@@ -51,8 +55,9 @@ export class ProductsComponent implements OnInit {
   }
 
   selectedItem(x): void {
-    this.select = x;
-    this.plusminus = true;
+    this.callme();
+     this.select = x;
+     this.plusminus = true;
   }
 
   increaseQuantity(): void {

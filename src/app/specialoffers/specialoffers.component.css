@@ -1,0 +1,24 @@
+.carousel-inner {
+    background-image: url('https://www.omnihotels.com/-/media/images/hotels/bospar/restaurants/bospar-omni-parker-house-parkers-restaurant-1170.jpg');
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+    width: 1360px;
+    opacity: 0.5;
+}
+.carousel-indicators {
+    margin-bottom: 150px;
+}
+#demo {
+    background-color: blue;
+}
+
+.innerDiv {
+    background-color: aquamarine;
+    height: 230px;
+    width: 33.33%;
+    border: 1px solid black;
+    z-index: 1;
+    padding: 20px;
+    color: blue;
+}

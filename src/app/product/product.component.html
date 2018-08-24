@@ -38,18 +38,18 @@
               <th style="text-align: right">Prices</th>
             </thead><br>
             <tbody>
-              <td>{{select.productName}}</td>
-              <td style="text-align: right">
-                <span class="fa fa-plus" style="border: 1px solid black;padding: 2px" *ngIf="plusminus" (click)="increaseQuantity(select)"></span>
+              <td>{{select?.productName}}</td>
+              <td style="text-align: right" *ngIf="plusminus">
+                <span class="fa fa-plus" style="border: 1px solid black;padding: 2px;cursor: pointer;" *ngIf="plusminus" (click)="increaseQuantity(select)"></span>
                 {{' '+quantity+' '}}
-                <span class="fa fa-minus" style="border: 1px solid black;padding: 2px" *ngIf="plusminus" (click)="decreaseQuantity(select)"></span>
+                <span class="fa fa-minus" style="border: 1px solid black;padding: 2px;cursor: pointer;" *ngIf="plusminus" (click)="decreaseQuantity(select)"></span>
               </td>
-              <td style="text-align: right;">{{select.price}}</td>
+              <td style="text-align: right;">{{select?.price}}</td>
             </tbody>
           </table>
         </div>
         <div class="card-body" style="padding: 5px 5px;padding-left: 30px">
-          <span>Total Amount</span><span style="float: right;margin-right: 15px">{{select.price}}</span>
+          <span>Total Amount</span><span style="float: right;margin-right: 15px">{{select?.price}}</span>
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" style="margin-left: 50%;transform: translate(-50%);cursor: pointer;">CONFIRM MY
