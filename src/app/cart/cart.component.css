@@ -16,3 +16,9 @@
     border: none;
     margin-top: 50px;
 }
+.card-body span {
+    margin-left: 150px;
+}
+.card-body span:nth-child(1) {
+    margin-left: 10px;
+}

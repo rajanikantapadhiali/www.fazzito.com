@@ -18,7 +18,7 @@ export class StorageService {
         if (sessionStorage.getItem(key)) {
             return JSON.parse(sessionStorage.getItem(key));
         } else {
-            return [];
+            return null;
         }
     }
 

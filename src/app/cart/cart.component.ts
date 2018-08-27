@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../home/home.service';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-cart',
@@ -8,15 +8,12 @@ import { HomeService } from '../home/home.service';
 })
 export class CartComponent implements OnInit {
 
-  productData: any;
+  selectedItem: any;
 
-  constructor(private homeservice: HomeService) { }
+  constructor(private appservice: StorageService) { }
 
   ngOnInit() {
-    this.homeservice.getItem()
-      .subscribe((res: any) => {
-        this.productData = res.data;
-      })
-}
+    this.selectedItem = this.appservice.getSessionStorage('cartItem');
+  }
 
 }

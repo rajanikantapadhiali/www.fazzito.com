@@ -15,7 +15,7 @@ import { MealplansComponent } from './mealplans/mealplans.component';
 import { CartComponent } from './cart/cart.component';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'menu/:_id', component: ProductsComponent },

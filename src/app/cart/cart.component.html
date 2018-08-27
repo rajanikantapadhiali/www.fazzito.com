@@ -4,10 +4,10 @@
     <span>Cart</span><span>Delivery Address</span><span>Payment</span><span>Order Place</span>
   </div>
   <div class="card-body">
-      <span></span><span></span><span></span><span></span>
+      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}" style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span>{{selectedItem?.price}}</span><span></span>
   </div>
   <div class="card-footer">
-    <h3>Total Amount</h3>
+    <h3>Total Amount</h3><span style="float: right;">{{selectedItem?.price}}</span>
   </div>
 </div>
 </div>

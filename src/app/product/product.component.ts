@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../home/home.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
+import { StorageService } from '../storage.service';
 
 interface Product {
   categoryName: string,
@@ -30,7 +31,7 @@ export class ProductsComponent implements OnInit {
   plusminus: boolean = false;
 
   constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
-    private _appservice: AppService) {
+    private _appservice: AppService, private storageService: StorageService) {
     this.id = this.activatedRoute.snapshot.params['_id'];
   }
 
@@ -45,9 +46,8 @@ export class ProductsComponent implements OnInit {
         })
       });
   }
-
-  callme() {
-    this._appservice.eventGenerate('clicked');
+  demo() {
+    this._appservice.eventGenerate(null);
   }
 
   showProducts(category): void {
@@ -55,9 +55,13 @@ export class ProductsComponent implements OnInit {
   }
 
   selectedItem(x): void {
-    this.callme();
-     this.select = x;
-     this.plusminus = true;
+    if (this._appservice.isAuthenticated()) {
+      this.select = x;
+      this.plusminus = true;
+      this.storageService.setSessionStorage('cartItem', x);
+    } else {
+      this.demo();
+    }
   }
 
   increaseQuantity(): void {
