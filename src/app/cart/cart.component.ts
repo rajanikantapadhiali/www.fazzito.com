@@ -9,11 +9,22 @@ import { StorageService } from '../storage.service';
 export class CartComponent implements OnInit {
 
   selectedItem: any;
+  quantity: number = 1;
 
   constructor(private appservice: StorageService) { }
 
   ngOnInit() {
     this.selectedItem = this.appservice.getSessionStorage('cartItem');
+  }
+
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+  decreaseQuantity(): void {
+    this.quantity--;
+  }
+  deleteItem(): void {
+    this.selectedItem = false;
   }
 
 }

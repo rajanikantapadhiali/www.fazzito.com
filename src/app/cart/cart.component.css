@@ -17,8 +17,13 @@
     margin-top: 50px;
 }
 .card-body span {
-    margin-left: 150px;
+    margin-left: 180px;
 }
 .card-body span:nth-child(1) {
     margin-left: 10px;
+}
+.card-body span i {
+    border: 1px solid black;
+    padding: 2px;
+    cursor: pointer;
 }

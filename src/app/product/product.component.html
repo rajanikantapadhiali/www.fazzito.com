@@ -44,12 +44,12 @@
                 {{' '+quantity+' '}}
                 <span class="fa fa-minus" style="border: 1px solid black;padding: 2px;cursor: pointer;" *ngIf="plusminus" (click)="decreaseQuantity(select)"></span>
               </td>
-              <td style="text-align: right;">{{select?.price}}</td>
+              <td style="text-align: right;" *ngIf='select'>{{price}}</td>
             </tbody>
           </table>
         </div>
         <div class="card-body" style="padding: 5px 5px;padding-left: 30px">
-          <span>Total Amount</span><span style="float: right;margin-right: 15px">{{select?.price}}</span>
+          <span>Total Amount</span><span style="float: right;margin-right: 15px">{{select?total:'$0'}}</span>
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" style="margin-left: 50%;transform: translate(-50%);cursor: pointer;">CONFIRM MY
