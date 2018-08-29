@@ -27,11 +27,10 @@ export class ProductsComponent implements OnInit {
   productData: any;
   id: number;
   select: object;
-  quantity: number = 1;
+  quantity: number;
   plusminus: boolean = false;
   total: number;
-  price: number;
-  itemArray: [];
+  selectedItemArray: object[];
 
   constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
     private _appservice: AppService, private storageService: StorageService) {
@@ -58,7 +57,6 @@ export class ProductsComponent implements OnInit {
   }
 
   selectedItem(x): void {
-    this.price = x.price;
     this.total = x.price;
     this.quantity = 1;
     if (this._appservice.isAuthenticated()) {
@@ -72,7 +70,7 @@ export class ProductsComponent implements OnInit {
 
   increaseQuantity(select): void {
     this.quantity++;
-    this.total = this.price * this.quantity;
+    this.total = select.price * this.quantity;
   }
   decreaseQuantity(select): void {
     this.quantity--;
@@ -81,6 +79,6 @@ export class ProductsComponent implements OnInit {
       this.plusminus = false;
       this.storageService.setSessionStorage('cartItem', null);
     }
-    this.total = this.price * this.quantity;
+    this.total = select.price * this.quantity;
   }
 }

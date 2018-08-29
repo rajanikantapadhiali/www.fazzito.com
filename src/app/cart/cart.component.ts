@@ -10,18 +10,26 @@ export class CartComponent implements OnInit {
 
   selectedItem: any;
   quantity: number = 1;
+  total: number;
 
-  constructor(private appservice: StorageService) { }
+  constructor(private storageService: StorageService) { }
 
   ngOnInit() {
-    this.selectedItem = this.appservice.getSessionStorage('cartItem');
+    this.selectedItem = this.storageService.getSessionStorage('cartItem');
+    this.total = this.selectedItem.price;
   }
 
   increaseQuantity(): void {
     this.quantity++;
+    this.total = this.selectedItem.price * this.quantity;
   }
   decreaseQuantity(): void {
     this.quantity--;
+    if(this.quantity == 0){
+    this.selectedItem = false;
+    this.storageService.setSessionStorage('cartItem', null);
+    }
+    this.total = this.selectedItem.price * this.quantity;
   }
   deleteItem(): void {
     this.selectedItem = false;

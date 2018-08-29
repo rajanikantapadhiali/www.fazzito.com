@@ -7,7 +7,7 @@
       <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}" style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity()'></i>{{' '+quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity()'></i></span><span>{{selectedItem?.price}}</span><span><i class="fa fa-trash" style="border:none" (click)='deleteItem()'></i></span>
   </div>
   <div class="card-footer">
-    <h3>Total Amount</h3><span style="float: right;">{{selectedItem?.price}}</span>
+    <h3>Total Amount</h3><span style="float: right;">{{total}}</span>
   </div>
 </div>
 </div>

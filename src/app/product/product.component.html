@@ -44,7 +44,7 @@
                 {{' '+quantity+' '}}
                 <span class="fa fa-minus" style="border: 1px solid black;padding: 2px;cursor: pointer;" *ngIf="plusminus" (click)="decreaseQuantity(select)"></span>
               </td>
-              <td style="text-align: right;" *ngIf='select'>{{price}}</td>
+              <td style="text-align: right;" *ngIf='select'>{{select?.price}}</td>
             </tbody>
           </table>
         </div>
