@@ -37,19 +37,19 @@
               <th style="text-align: right">Quantity</th>
               <th style="text-align: right">Prices</th>
             </thead><br>
-            <tbody>
+            <tbody *ngFor="let select of selectedItemArray2">
               <td>{{select?.productName}}</td>
               <td style="text-align: right" *ngIf="plusminus">
-                <span class="fa fa-plus" style="border: 1px solid black;padding: 2px;cursor: pointer;" *ngIf="plusminus" (click)="increaseQuantity(select)"></span>
-                {{' '+quantity+' '}}
-                <span class="fa fa-minus" style="border: 1px solid black;padding: 2px;cursor: pointer;" *ngIf="plusminus" (click)="decreaseQuantity(select)"></span>
+                <span class="fa fa-plus" style="border: 1px solid black;padding: 2px;cursor: pointer;" (click)="increaseQuantity(select)"></span>
+                {{' '+select?.quantity+' '}}
+                <span class="fa fa-minus" style="border: 1px solid black;padding: 2px;cursor: pointer;" (click)="decreaseQuantity(select)"></span>
               </td>
-              <td style="text-align: right;" *ngIf='select'>{{select?.price}}</td>
+              <td style="text-align: right;" *ngIf='select'>{{select?.price}}</td><br/><br/>
             </tbody>
           </table>
         </div>
         <div class="card-body" style="padding: 5px 5px;padding-left: 30px">
-          <span>Total Amount</span><span style="float: right;margin-right: 15px">{{select?total:'$0'}}</span>
+          <span>Total Amount</span><span style="float: right;margin-right: 15px">{{total}}</span>
         </div>
         <div class="card-footer">
           <button class="btn btn-primary" style="margin-left: 50%;transform: translate(-50%);cursor: pointer;">CONFIRM MY

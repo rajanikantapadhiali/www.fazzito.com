@@ -29,8 +29,9 @@ export class ProductsComponent implements OnInit {
   select: object;
   quantity: number;
   plusminus: boolean = false;
-  total: number;
-  selectedItemArray: object[];
+  total: number = 0;
+  selectedItemArray: any[] = [];
+  selectedItemArray2: any[] = [];
 
   constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
     private _appservice: AppService, private storageService: StorageService) {
@@ -57,28 +58,28 @@ export class ProductsComponent implements OnInit {
   }
 
   selectedItem(x): void {
-    this.total = x.price;
-    this.quantity = 1;
     if (this._appservice.isAuthenticated()) {
-      this.select = x;
-      this.plusminus = true;
-      this.storageService.setSessionStorage('cartItem', x);
+      x.quantity = 1;
+      this.selectedItemArray.push(x);
+      this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
+      this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
+        this.total += x.price;  
+        this.plusminus = true;
     } else {
       this.demo();
     }
   }
 
   increaseQuantity(select): void {
-    this.quantity++;
-    this.total = select.price * this.quantity;
+    select.quantity++;
+    this.total += select.price;
   }
   decreaseQuantity(select): void {
-    this.quantity--;
-    if(this.quantity == 0){
-      this.select = null;
-      this.plusminus = false;
-      this.storageService.setSessionStorage('cartItem', null);
+    select.quantity--;
+    if(select.quantity == 0){
+      delete this.selectedItemArray2[select];
+      this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
     }
-    this.total = select.price * this.quantity;
+    this.total -= select.price;
   }
 }
