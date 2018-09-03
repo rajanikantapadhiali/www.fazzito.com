@@ -27,15 +27,16 @@ export class ProductsComponent implements OnInit {
   productData: any;
   id: number;
   select: object;
-  quantity: number;
   plusminus: boolean = false;
   total: number = 0;
   selectedItemArray: any[] = [];
   selectedItemArray2: any[] = [];
+  selectedItemArray3: any[] = [];
 
   constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
     private _appservice: AppService, private storageService: StorageService) {
     this.id = this.activatedRoute.snapshot.params['_id'];
+    this.productData = this.activatedRoute.snapshot.data['ram'];
   }
 
   ngOnInit() {
@@ -49,7 +50,7 @@ export class ProductsComponent implements OnInit {
         })
       });
   }
-  demo() {
+  logIn() {
     this._appservice.eventGenerate(null);
   }
 
@@ -63,23 +64,25 @@ export class ProductsComponent implements OnInit {
       this.selectedItemArray.push(x);
       this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
       this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
-        this.total += x.price;  
-        this.plusminus = true;
-    } else {
-      this.demo();
-    }
+      this.total += x.price;
+      this.plusminus = true;
+      }
+    else {
+  this.logIn();
+}
   }
 
-  increaseQuantity(select): void {
-    select.quantity++;
-    this.total += select.price;
-  }
-  decreaseQuantity(select): void {
-    select.quantity--;
-    if(select.quantity == 0){
-      delete this.selectedItemArray2[select];
-      this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
-    }
-    this.total -= select.price;
+increaseQuantity(select): void {
+  select.quantity++;
+  this.total += select.price;
+}
+decreaseQuantity(select): void {
+  select.quantity--;
+  if(select.quantity == 0) {
+  this.selectedItemArray2.splice(this.selectedItemArray2.indexOf(select), 1);
+  this.selectedItemArray = this.selectedItemArray2;
+  this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
+}
+this.total -= select.price;
   }
 }

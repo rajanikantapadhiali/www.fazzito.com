@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../home/home.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -9,13 +10,14 @@ import { HomeService } from '../home/home.service';
 export class MenuComponent implements OnInit {
   data: Object;
 
-  constructor(private homeservice: HomeService) {
+  constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute) {
    }
    
   ngOnInit() {
     this.homeservice.getItem()
     .subscribe(data => {
       this.data = data;
+      this.data = this.activatedRoute.snapshot.data['shyam'];
     });
   }
 

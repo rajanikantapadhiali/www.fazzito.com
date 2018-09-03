@@ -13,12 +13,17 @@ import { BooktableComponent } from './booktable/booktable.component';
 import { ContactComponent } from './contact/contact.component';
 import { MealplansComponent } from './mealplans/mealplans.component';
 import { CartComponent } from './cart/cart.component';
+import { ProductResolverService } from './productResolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
-  { path: 'menu', component: MenuComponent },
-  { path: 'menu/:_id', component: ProductsComponent },
+  { path: 'menu',
+    component: MenuComponent,
+    resolve: { shyam: ProductResolverService} },
+  { path: 'menu/:_id', 
+    component: ProductsComponent,
+    resolve: { ram: ProductResolverService} },
   { path: 'specialoffers', component: SpecialoffersComponent },
   { path: 'booktable', component: BooktableComponent },
   { path: 'contact', component: ContactComponent },
@@ -41,7 +46,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes), FormsModule
   ],
-  providers: [],
+  providers: [ProductResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

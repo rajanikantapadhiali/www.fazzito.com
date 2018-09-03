@@ -8,31 +8,22 @@ import { StorageService } from '../storage.service';
 })
 export class CartComponent implements OnInit {
 
-  selectedItem: any;
-  quantity: number = 1;
+  selectedItemArray: any[] = [];
   total: number;
 
   constructor(private storageService: StorageService) { }
 
   ngOnInit() {
-    this.selectedItem = this.storageService.getSessionStorage('cartItem');
-    this.total = this.selectedItem.price;
+    this.selectedItemArray = this.storageService.getSessionStorage('cartItem');
+    this.total = this.selectedItemArray[0].price;
   }
 
   increaseQuantity(): void {
-    this.quantity++;
-    this.total = this.selectedItem.price * this.quantity;
   }
   decreaseQuantity(): void {
-    this.quantity--;
-    if(this.quantity == 0){
-    this.selectedItem = false;
-    this.storageService.setSessionStorage('cartItem', null);
-    }
-    this.total = this.selectedItem.price * this.quantity;
+   
   }
   deleteItem(): void {
-    this.selectedItem = false;
   }
 
 }
