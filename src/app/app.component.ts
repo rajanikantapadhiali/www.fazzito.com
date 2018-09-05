@@ -15,11 +15,7 @@ export class AppComponent implements OnInit {
   private allUsers: any = [];
   cart: boolean = false;
   user_name: string;
-  constructor(
-    private router: Router,
-    private _appservice: AppService,
-    private _storageService: StorageService
-  ) {
+  constructor(private router: Router, private _appservice: AppService, private _storageService: StorageService) {
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
         this.showLoadingIndicator = true;

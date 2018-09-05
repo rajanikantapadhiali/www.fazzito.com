@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { StorageService } from './storage.service';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
+
 export class AppService {
     constructor(private storageService: StorageService) { }
     private _todo: Subject<any> = new Subject();

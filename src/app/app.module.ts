@@ -14,6 +14,7 @@ import { ContactComponent } from './contact/contact.component';
 import { MealplansComponent } from './mealplans/mealplans.component';
 import { CartComponent } from './cart/cart.component';
 import { ProductResolverService } from './productResolver.service';
+import { AppService } from './app.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -46,7 +47,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes), FormsModule
   ],
-  providers: [ProductResolverService],
+  providers: [ProductResolverService, AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
