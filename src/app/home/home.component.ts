@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this._homeservice.getItem()
       .subscribe(data => {
         this.data = data;
-        console.log(this.data);
       });
   }
   selectedItem(x): void {

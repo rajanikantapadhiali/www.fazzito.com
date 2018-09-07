@@ -1,13 +1,62 @@
 <div class="container">
-<div class="card">
-  <div class="card-header">
-    <span>Cart</span><span>Delivery Address</span><span>Payment</span><span>Order Place</span>
+  <div id="navId">
+    <span id="cartHead" (click)="showCart('cartHead')"><i class="fa fa-shopping-cart"></i>Cart</span>
+    <span id="Delivery" (click)="showDeliveryAddress('Delivery')"><i class="fa fa-address-card"></i>Delivery Address</span>
+    <span id="Pay" (click)="showPayment('Pay')"><i class="fa fa-rupee"></i>Payment</span>
+    <span id="Order" (click)="showPlaceOreder('Order')"><i class="fa fa-check"></i>Order Place</span>
   </div>
-  <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
-      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}" style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity()'></i>{{' '+quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity()'></i></span><span>{{selectedItem?.price}}</span><span><i class="fa fa-trash" style="border:none" (click)='deleteItem()'></i></span>
+
+  <div class="card" id="cart">
+    <div class="card-header bg-info text-white">You Have (4) items In Your Cart <span style="float:right;cursor: pointer;"
+        (click)="addMoreItems()"> Add More Items</span></div>
+    <div class="card-body" *ngFor='let selectedItem of selectedItemArray2'>
+      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
+          style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity(selectedItem)'></i>{{'
+        '+selectedItem.quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity(selectedItem)'></i></span><span>{{selectedItem?.price}}</span><span><i
+          class="fa fa-trash" style="border:none" (click)='deleteItem(selectedItem)'></i></span>
+    </div>
+    <div class="card-footer cart">
+      Total Amount<span style="float: right;">{{total}}</span>
+    </div>
   </div>
-  <div class="card-footer">
-    <h3>Total Amount</h3><span style="float: right;">{{total}}</span>
+
+  <div class="card" id="deliveryAddress">
+    <div class="card-header bg-danger text-white">{{currentUser | uppercase}}<span style="float:right">{{phoneNo}}</span></div>
+    <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
+      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
+          style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity()'></i>{{'
+        '+selectedItem.quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity()'></i></span><span>{{selectedItem?.price}}</span><span><i
+          class="fa fa-trash" style="border:none" (click)='deleteItem()'></i></span>
+    </div>
+    <div class="card-footer cart">
+      Total Amount<span style="float: right;">{{total}}</span>
+    </div>
   </div>
-</div>
+
+  <div class="card" id="Payment">
+    <div class="card-header bg-success text-white">You Have (4) items In Your Cart<span style="float:right">Add More Items</span></div>
+    <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
+      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
+          style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity()'></i>{{'
+        '+selectedItem.quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity()'></i></span><span>{{selectedItem?.price}}</span><span><i
+          class="fa fa-trash" style="border:none" (click)='deleteItem()'></i></span>
+    </div>
+    <div class="card-footer cart">
+      Total Amount<span style="float: right;">{{total}}</span>
+    </div>
+  </div>
+
+  <div class="card" id="PlaceOrder">
+    <div class="card-header bg-warning text-dark">You Have (4) items In Your Cart<span style="float:right">Add More Items</span></div>
+    <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
+      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
+          style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity()'></i>{{'
+        '+selectedItem.quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity()'></i></span><span>{{selectedItem?.price}}</span><span><i
+          class="fa fa-trash" style="border:none" (click)='deleteItem()'></i></span>
+    </div>
+    <div class="card-footer cart">
+      Total Amount<span style="float: right;">{{total}}</span>
+    </div>
+  </div>
+
 </div>

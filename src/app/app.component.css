@@ -113,20 +113,14 @@ nav img {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 footer .row div {
 	color: white;
 	font-size: 20px;
 	text-align: center;
 	padding-top: 30px;
 	padding-bottom: 30px;
+}
+
+footer {
+	z-index: 5;
 }

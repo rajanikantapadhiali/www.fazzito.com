@@ -27,8 +27,8 @@ export class ProductsComponent implements OnInit {
   productData: any;
   id: number;
   select: object;
-  plusminus: boolean = false;
   total: number = 0;
+  plusminus: boolean = false;
   selectedItemArray: any[] = [];
   selectedItemArray2: any[] = [];
 
@@ -44,7 +44,7 @@ export class ProductsComponent implements OnInit {
         this.categoryData = res.data;
         this.categoryData.map((item: any) => {
           if (item._id === this.id) {
-            this.productData = item.products
+            this.productData = item.products;
           };
         })
       });
@@ -59,7 +59,6 @@ export class ProductsComponent implements OnInit {
 
   selectedItem(x): void {
     let isPresent: boolean;
-    let y;
     if (this._appservice.isAuthenticated()) {
       this.selectedItemArray2.forEach(element => {
         if (element._id == x._id) {
@@ -68,6 +67,7 @@ export class ProductsComponent implements OnInit {
       });
       if (isPresent) {
         this.selectedItemArray2[this.selectedItemArray2.indexOf(x)].quantity++;
+        this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
         this.total += x.price;
       }
       else {
@@ -85,11 +85,13 @@ export class ProductsComponent implements OnInit {
   }
 
   increaseQuantity(select): void {
-    select.quantity++;
+    this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity++;
+    this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
     this.total += select.price;
   }
   decreaseQuantity(select): void {
-    select.quantity--;
+    this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity--;
+    this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
     if (select.quantity == 0) {
       this.selectedItemArray2.splice(this.selectedItemArray2.indexOf(select), 1);
       this.selectedItemArray = this.selectedItemArray2;
