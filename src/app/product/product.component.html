@@ -52,7 +52,7 @@
           <span>Total Amount</span><span style="float: right;margin-right: 15px">{{total}}</span>
         </div>
         <div class="card-footer">
-          <button class="btn btn-primary" style="margin-left: 50%;transform: translate(-50%);cursor: pointer;">CONFIRM MY
+          <button (click)="confirmOrder()" id="confirmOrder" class="btn btn-primary" style="margin-left: 50%;transform: translate(-50%);cursor: pointer;">CONFIRM MY
             ORDER
           </button>
         </div>

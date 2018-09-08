@@ -3,6 +3,7 @@ import { HomeService } from '../home/home.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
 import { StorageService } from '../storage.service';
+import { Router } from '@angular/router';
 
 interface Product {
   categoryName: string,
@@ -33,7 +34,8 @@ export class ProductsComponent implements OnInit {
   selectedItemArray2: any[] = [];
 
   constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
-    private _appservice: AppService, private storageService: StorageService) {
+    private _appservice: AppService, private storageService: StorageService,
+    private router: Router) {
     this.id = this.activatedRoute.snapshot.params['_id'];
     this.productData = this.activatedRoute.snapshot.data['ram'];
   }
@@ -48,6 +50,9 @@ export class ProductsComponent implements OnInit {
           };
         })
       });
+      if(this.selectedItemArray2.length == 0){
+        document.getElementById('confirmOrder').style.cursor = 'not-allowed';
+      }
   }
   logIn() {
     this._appservice.eventGenerate(null);
@@ -98,5 +103,12 @@ export class ProductsComponent implements OnInit {
       this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
     }
     this.total -= select.price;
+    if(this.selectedItemArray2.length == 0){
+      document.getElementById('confirmOrder').style.cursor = 'not-allowed';
+    }
+  }
+
+  confirmOrder(): void {
+    this.router.navigate(['/cart']);
   }
 }

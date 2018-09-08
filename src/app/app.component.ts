@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   private allUsers: any = [];
   cart: boolean = false;
   user_name: string;
+  show: boolean = false;
   constructor(private router: Router, private _appservice: AppService, private _storageService: StorageService) {
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
@@ -92,7 +93,19 @@ export class AppComponent implements OnInit {
   }
 
   myAccount(): void {
-    document.getElementById('myAccount').style.display = "block";
+    if(!this.show){
+      this.show = true;
+      document.getElementById('myAccount').style.display = "none";
+      return;
+    }
+
+    if(this.show){
+      this.show = false;
+      document.getElementById('myAccount').style.display = "block";
+      return;
+    }
+    
+   
   }
 
   logout(): void {

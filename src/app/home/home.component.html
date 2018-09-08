@@ -65,26 +65,26 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
-        <div class="card" *ngFor="let x of data?.data" (click)='selectedItem(x)'>
-          <img class="card-img-top" src="{{'https://fazzito.com/api'+ x.image.imageUrl}}">
+        <div class="card" *ngFor="let x of data" (click)='selectedItem(x)'>
+          <img class="card-img-top" src="{{'https://fazzito.com/api'+ x.images[0].imageUrl}}">
           <div class="card-body">
-            <h5 class="card-title" style="text-align:center">{{x.categoryName}}</h5>
+            <h5 class="card-title" style="text-align:center">{{x.productName}}</h5>
           </div>
         </div>
     </div>
     <div class="col-sm-4">
-      <div class="card" style="width: 100%;height:400px ;" *ngIf="toggle">
-        <img class="card-img-top" src="{{'https://fazzito.com/api'+ select.image.imageUrl}}" style="width:100%;height:auto">
+      <div class="card" style="width: 100%;height:400px ;" >
+        <img class="card-img-top" src="{{'https://fazzito.com/api'+ select.images[0].imageUrl}}" style="width:100%;height:auto">
         <div class="card-body">
-          <h5 class="card-title" style="text-align:center">{{select.categoryName}}</h5>
+          <h5 class="card-title" style="text-align:center">{{select.productName}}</h5>
           <a href="#" class="btn btn-primary" style="float: right;">+ADD</a>
         </div>
       </div>
 
       <div class="card" style="width: 100%;height:400px ;" *ngIf="toggle2">
-        <img class="card-img-top" src="{{'https://fazzito.com/api'+ data?.data[0].image.imageUrl}}" style="width:100%;height:auto">
+        <img class="card-img-top" src="{{'https://fazzito.com/api'+ data[0].images[0].imageUrl}}" style="width:100%;height:auto">
         <div class="card-body">
-          <h5 class="card-title" style="text-align:center">{{data?.data[0].categoryName}}</h5>
+          <h5 class="card-title" style="text-align:center">{{data[0].productName}}</h5>
           <a href="#" class="btn btn-primary" style="float: right;">+ADD</a>
         </div>
       </div>

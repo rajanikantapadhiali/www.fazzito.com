@@ -97,5 +97,4 @@ export class CartComponent implements OnInit {
   addMoreItems(): void {
     this.router.navigate(['/menu']);
   }
-
 }

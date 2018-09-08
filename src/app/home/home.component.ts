@@ -8,23 +8,32 @@ import { HomeService } from './home.service';
 })
 export class HomeComponent implements OnInit {
 
-  data: object;
+  data: any = [];
   select: object;
-  toggle: boolean=false;
-  toggle2: boolean=true;
+  toggle: boolean = false;
+  toggle2: boolean = true;
 
   constructor(private _homeservice: HomeService) { }
 
   ngOnInit() {
     this._homeservice.getItem()
-      .subscribe(data => {
-        this.data = data;
+      .subscribe((data: any) => {
+        data.data.forEach(item => {
+          item.products.forEach(product => {
+            if (product.isVisibleOnHome) {
+              this.data.push(product);
+              console.log('this.data: ', this.data[0]);
+              
+            }
+          })
+        })
       });
   }
   selectedItem(x): void {
-      this.select = x;
-      this.toggle=true;
-      this.toggle2=false;
+    this.select = x.productName;
+    console.log('this.select: ', this.select);
+    this.toggle = true;
+    this.toggle2 = false;
   }
 
 }
