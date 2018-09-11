@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
 import { StorageService } from '../storage.service';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 
 interface Product {
   categoryName: string,
@@ -50,9 +51,15 @@ export class ProductsComponent implements OnInit {
           };
         })
       });
-      if(this.selectedItemArray2.length == 0){
-        document.getElementById('confirmOrder').style.cursor = 'not-allowed';
-      }
+    this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
+    if (this.selectedItemArray2.length > 0) {
+        this.plusminus = true;
+        this.total = this.storageService.getSessionStorage('total');
+    }
+    else { 
+      this.total = 0;
+      this.storageService.setSessionStorage('total', this.total);
+    }
   }
   logIn() {
     this._appservice.eventGenerate(null);
@@ -63,17 +70,17 @@ export class ProductsComponent implements OnInit {
   }
 
   selectedItem(x): void {
-    let isPresent: boolean;
+    let abc: number;
     if (this._appservice.isAuthenticated()) {
-      this.selectedItemArray2.forEach(element => {
-        if (element._id == x._id) {
-          isPresent = true;
-        } else { isPresent = false; }
+      const isPresent = this.selectedItemArray2.find(item => {
+        abc = this.selectedItemArray2.indexOf(item);
+        return item._id === x._id;
       });
       if (isPresent) {
-        this.selectedItemArray2[this.selectedItemArray2.indexOf(x)].quantity++;
+        this.selectedItemArray2[abc].quantity++;
         this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
         this.total += x.price;
+        this.storageService.setSessionStorage('total', this.total);
       }
       else {
         x.quantity = 1;
@@ -81,6 +88,7 @@ export class ProductsComponent implements OnInit {
         this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
         this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
         this.total += x.price;
+        this.storageService.setSessionStorage('total', this.total);
         this.plusminus = true;
       }
     }
@@ -93,6 +101,7 @@ export class ProductsComponent implements OnInit {
     this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity++;
     this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
     this.total += select.price;
+    this.storageService.setSessionStorage('total', this.total);
   }
   decreaseQuantity(select): void {
     this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity--;
@@ -103,12 +112,12 @@ export class ProductsComponent implements OnInit {
       this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
     }
     this.total -= select.price;
-    if(this.selectedItemArray2.length == 0){
-      document.getElementById('confirmOrder').style.cursor = 'not-allowed';
-    }
+    this.storageService.setSessionStorage('total', this.total);
   }
 
   confirmOrder(): void {
-    this.router.navigate(['/cart']);
+    this.router.navigate(['/cart'], {
+      queryParams: { 'confirmOrder': true }
+    });
   }
 }

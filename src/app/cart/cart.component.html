@@ -1,9 +1,9 @@
 <div class="container">
   <div id="navId">
-    <span id="cartHead" (click)="showCart('cartHead')"><i class="fa fa-shopping-cart"></i>Cart</span>
-    <span id="Delivery" (click)="showDeliveryAddress('Delivery')"><i class="fa fa-address-card"></i>Delivery Address</span>
-    <span id="Pay" (click)="showPayment('Pay')"><i class="fa fa-rupee"></i>Payment</span>
-    <span id="Order" (click)="showPlaceOreder('Order')"><i class="fa fa-check"></i>Order Place</span>
+    <span id="cartHead" (click)="showCart()"><i class="fa fa-shopping-cart"></i>Cart</span>
+    <span id="Delivery" (click)="showDeliveryAddress()"><i class="fa fa-address-card"></i>Delivery Address</span>
+    <span id="Pay" (click)="showPayment()"><i class="fa fa-rupee"></i>Payment</span>
+    <span id="Order" (click)="showPlaceOreder()"><i class="fa fa-check"></i>Order Place</span>
   </div>
 
   <div class="card" id="cart">
@@ -18,19 +18,41 @@
     <div class="card-footer cart">
       Total Amount<span style="float: right;">{{total}}</span>
     </div>
+    <button (click)="addressTab()" class="btn btn-info" style="float:right;margin-top: 20px">Delivery Address</button>
   </div>
 
   <div class="card" id="deliveryAddress">
     <div class="card-header bg-danger text-white">{{currentUser | uppercase}}<span style="float:right">{{phoneNo}}</span></div>
-    <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
-      <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
-          style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity()'></i>{{'
-        '+selectedItem.quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity()'></i></span><span>{{selectedItem?.price}}</span><span><i
-          class="fa fa-trash" style="border:none" (click)='deleteItem()'></i></span>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3" style="height:270px;border:2px dashed black;cursor: pointer;" (click)="showAddNewAddressModal(raja)">
+          <span style="position:absolute;top:50%;left:50%;transform: translate(-50%,-50%)">+Add new Address</span>
+        </div>
+        <div class="col-md-9" style="height:270px;background-color: lightgray;overflow: auto;">
+          <h3 style="position:absolute;top:50%;left:50%;transform: translate(-50%,-50%)"
+           *ngIf="newAddressArray.length == 0">Shipping Address Not Available</h3>
+            <div class="row">
+              <div class="card col-md-4" *ngFor="let a of newAddressArray" style="height:270px;margin-left: 5px;margin-top: 5px">
+                <div class="card-header bg-success text-white">
+                  <form>
+                    <input type="checkbox" name="selectAddresss" [(ngModel)]="selectAddresss">Select Address for Delivery
+                  </form>
+                </div>
+                <div class="card-body">
+                 <h5>Address - {{a.address}}</h5>
+                 <h5>L-mark - {{a.landmark}}</h5>
+                 <h5>Pincode - {{a.pincode}}</h5>
+                </div>
+                <div class="card-footer cart">
+                    <i class="fa fa-edit" (click)="editAddress(a)"></i>
+                    <i class="fa fa-trash" style="float:right" (click)="deleteAddress(a)"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
-    <div class="card-footer cart">
-      Total Amount<span style="float: right;">{{total}}</span>
-    </div>
+    <button (click)="paymentTab()" class="btn btn-danger" style="float:right;margin-top: 20px">Payment</button>
   </div>
 
   <div class="card" id="Payment">
@@ -58,5 +80,16 @@
       Total Amount<span style="float: right;">{{total}}</span>
     </div>
   </div>
+
+</div>
+
+<div #raja id="ads" class="justify-content-center align-items-center bg-primary">
+  <i style="float: right;font-size: 20px;margin-right: 10px;margin-top: 10px" class="fa fa-times" (click)="hideAddNewAddressModal(raja)"></i>
+  <form #addNewAddress="ngForm" style="padding:50px">
+    <input type="text" class="form-control" name="address" [(ngModel)]="address" placeholder="Enter address"><br>
+    <input type="text" class="form-control" name="landmark" [(ngModel)]="landmark" placeholder="Enter landmark"><br>
+    <input type="number" class="form-control" name="pincode" [(ngModel)]="pincode" placeholder="Enter pincode"><br>
+    <input type="submit" class="btn btn-success form-control" value="submit" (click)="addAddress(addNewAddress)">
+  </form>
 
 </div>

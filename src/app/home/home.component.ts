@@ -21,9 +21,7 @@ export class HomeComponent implements OnInit {
         data.data.forEach(item => {
           item.products.forEach(product => {
             if (product.isVisibleOnHome) {
-              this.data.push(product);
-              console.log('this.data: ', this.data[0]);
-              
+              this.data.push(product);    
             }
           })
         })

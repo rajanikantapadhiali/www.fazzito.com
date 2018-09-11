@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../storage.service';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
@@ -15,13 +17,20 @@ export class CartComponent implements OnInit {
   total: number = 0;
   currentUser: string;
   phoneNo: number;
+  newAddressArray: any[] = [];
 
-  constructor(private storageService: StorageService, private appService: AppService, private router: Router) { }
+  constructor(private storageService: StorageService, private appService: AppService,
+     private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
     this.currentUser = this.storageService.getSessionStorage('current_user').firstname;
     this.phoneNo = this.storageService.getSessionStorage('current_user').phone;
+
+    if(this.route.snapshot.queryParamMap.has('confirmOrder')){
+      this.showDeliveryAddress();
+    }
+    this.newAddressArray = this.storageService.getLocalStorage('address');
   }
 
   increaseQuantity(select): void {
@@ -45,7 +54,7 @@ export class CartComponent implements OnInit {
     this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
   }
 
-  showCart(x): void {
+  showCart(): void {
     let deliveryAddress = document.getElementById('deliveryAddress');
     deliveryAddress.style.display = 'none';
     let showPayment = document.getElementById('Payment');
@@ -58,7 +67,7 @@ export class CartComponent implements OnInit {
 
   }
 
-  showDeliveryAddress(x): void {
+  showDeliveryAddress(): void {
     let cart = document.getElementById('cart');
     cart.style.display = 'none';
     let showPayment = document.getElementById('Payment');
@@ -70,7 +79,7 @@ export class CartComponent implements OnInit {
     deliveryAddress.style.display = 'block';
   }
 
-  showPayment(x): void {
+  showPayment(): void {
     let PlaceOrder = document.getElementById('PlaceOrder');
     PlaceOrder.style.display = 'none';
     let deliveryAddress = document.getElementById('deliveryAddress');
@@ -82,7 +91,7 @@ export class CartComponent implements OnInit {
     showPayment.style.display = 'block';
   }
 
-  showPlaceOreder(x): void {
+  showPlaceOreder(): void {
     let showPayment = document.getElementById('Payment');
     showPayment.style.display = 'none';
     let deliveryAddress = document.getElementById('deliveryAddress');
@@ -96,5 +105,31 @@ export class CartComponent implements OnInit {
 
   addMoreItems(): void {
     this.router.navigate(['/menu']);
+  }
+
+  showAddNewAddressModal(raja): void {
+    raja.style.display = 'block';
+  }
+  hideAddNewAddressModal(raja): void {
+    raja.style.display = 'none';
+  }
+
+  addAddress(addNewAddress: NgForm): void {
+    this.newAddressArray.push(addNewAddress.value);
+    this.storageService.setLocaStorage('address',this.newAddressArray);
+    document.getElementById('ads').style.display = 'none';
+  }
+  editAddress(address): void {
+    document.getElementById('ads').style.display = 'block';
+  }
+  deleteAddress(address): void {
+    this.newAddressArray.splice(this.newAddressArray.indexOf(address),1);
+    this.storageService.setLocaStorage('address', this.newAddressArray);
+  }
+  addressTab(): void {
+    this.showDeliveryAddress();
+  }
+  paymentTab(): void {
+    this.showPayment();
   }
 }

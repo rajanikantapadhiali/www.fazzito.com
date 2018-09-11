@@ -7,7 +7,7 @@
     </ul>
     <img src="../assets/image/Logo.png">
     <ul class="linkr">
-        <li *ngIf="cart"><i class="fa fa-cart-arrow-down" style="font-size:20px"></i><a routerLink="cart">&nbsp;cart&nbsp;({{2}})</a></li>
+        <li *ngIf="cart"><i class="fa fa-cart-arrow-down" style="font-size:20px"></i><a routerLink="cart">&nbsp;cart&nbsp;({{noOfItem}})</a></li>
         <li (click)="myAccount()" *ngIf="cart"><span class="fa fa-user"></span><span style="color: rgb(39, 95, 151);font-family: Arial, Helvetica, sans-serif;cursor: pointer;"> {{user_name}}</span></li>
         <li (click)="showLogin()" *ngIf="!cart"><span style="color: rgb(39, 95, 151);font-family: Arial, Helvetica, sans-serif;cursor: pointer;">LOGIN</span></li>
         <li><a routerLink="contact">CONTACT</a></li>
@@ -41,7 +41,7 @@
     </div>
 </footer>
 <div id="loginModal">
-    <h3 style="text-align:center">LogIn</h3><i style="float: right;font-size: 20px" class="fa fa-times" (click)="hideLogin()"></i><br>
+    <h3 style="text-align:center">LogIn</h3><i style="float: right;font-size: 20px;cursor: pointer;" class="fa fa-times" (click)="hideLogin()"></i><br>
     <form #loginForm="ngForm">
         <label for='username'>Enter First Name</label>
         <input type="text" maxlength="10" class="form-control" name="phone" [(ngModel)]="phone"><br>
@@ -55,7 +55,7 @@
 </div>
 
 <div id="signupModal">
-    <h3 style="text-align:center">SignUp</h3> <i style="float: right;font-size: 20px" class="fa fa-times" (click)="hideSignup()"></i><br>
+    <h3 style="text-align:center">SignUp</h3> <i style="float: right;font-size: 20px;cursor: pointer;" class="fa fa-times" (click)="hideSignup()"></i><br>
     <form #signupForm="ngForm">
         <input type="text" class="form-control" name="firstname" [(ngModel)]="firstname" placeholder="Enter First Name"><br>
         <input type="email" class="form-control" name="email" [(ngModel)]="email" placeholder="Enter E-mail"><br>
