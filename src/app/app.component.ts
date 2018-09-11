@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Event, Router, NavigationStart, NavigationEnd, } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AppService } from './app.service';
@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
   cart: boolean = false;
   user_name: string;
   show: boolean = false;
+  noOfItem: number;
+  itemNo: boolean = false;
  
   constructor(private router: Router, private _appservice: AppService, private _storageService: StorageService) {
     this.router.events.subscribe((routerEvent: Event) => {
@@ -38,6 +40,15 @@ export class AppComponent implements OnInit {
       this.user_name = user.firstname;
     }
     this.allUsers = this._storageService.getLocalStorage('all_users');
+  }
+  ngDoCheck() {
+    this.noOfItem = this._storageService.getLocalStorage('cartItem').length;
+    if(this.noOfItem > 0){
+      this.itemNo = true;
+    }
+    else {
+      this.itemNo = false;
+    }
   }
 
   public showLogin(): void {

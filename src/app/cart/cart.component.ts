@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../storage.service';
-import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -13,19 +12,19 @@ import { NgForm } from '@angular/forms';
 export class CartComponent implements OnInit {
 
   selectedItemArray: any[] = [];
-  selectedItemArray2: any[] = [];
   total: number = 0;
   currentUser: string;
   phoneNo: number;
   newAddressArray: any[] = [];
 
-  constructor(private storageService: StorageService, private appService: AppService,
+  constructor(private storageService: StorageService,
      private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
+    this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
     this.currentUser = this.storageService.getSessionStorage('current_user').firstname;
     this.phoneNo = this.storageService.getSessionStorage('current_user').phone;
+    this.total = this.storageService.getLocalStorage('total');
 
     if(this.route.snapshot.queryParamMap.has('confirmOrder')){
       this.showDeliveryAddress();
@@ -34,24 +33,28 @@ export class CartComponent implements OnInit {
   }
 
   increaseQuantity(select): void {
-    this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity++;
-    this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
+    this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
+    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     this.total += select.price;
+    this.storageService.setLocaStorage('total', this.total);
   }
   decreaseQuantity(select): void {
-    this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity--;
-    this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
+    this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
+    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     if (select.quantity == 0) {
-      this.selectedItemArray2.splice(this.selectedItemArray2.indexOf(select), 1);
-      this.selectedItemArray = this.selectedItemArray2;
-      this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
+      this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
+      this.selectedItemArray = this.selectedItemArray;
+      this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     }
     this.total -= select.price;
+    this.storageService.setLocaStorage('total', this.total);
 
   }
   deleteItem(select): void {
-    this.selectedItemArray2.splice(this.selectedItemArray2.indexOf(select), 1);
-    this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
+    this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
+    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+    this.total -= select.quantity * select.price;
+    this.storageService.setLocaStorage('total', this.total);
   }
 
   showCart(): void {

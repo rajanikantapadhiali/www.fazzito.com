@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
 import { StorageService } from '../storage.service';
 import { Router } from '@angular/router';
-import { element } from 'protractor';
 
 interface Product {
   categoryName: string,
@@ -32,7 +31,6 @@ export class ProductsComponent implements OnInit {
   total: number = 0;
   plusminus: boolean = false;
   selectedItemArray: any[] = [];
-  selectedItemArray2: any[] = [];
 
   constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
     private _appservice: AppService, private storageService: StorageService,
@@ -51,14 +49,14 @@ export class ProductsComponent implements OnInit {
           };
         })
       });
-    this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
-    if (this.selectedItemArray2.length > 0) {
+    this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
+    if (this.selectedItemArray.length > 0) {
         this.plusminus = true;
-        this.total = this.storageService.getSessionStorage('total');
+        this.total = this.storageService.getLocalStorage('total');
     }
     else { 
       this.total = 0;
-      this.storageService.setSessionStorage('total', this.total);
+      this.storageService.setLocaStorage('total', this.total);
     }
   }
   logIn() {
@@ -72,23 +70,22 @@ export class ProductsComponent implements OnInit {
   selectedItem(x): void {
     let abc: number;
     if (this._appservice.isAuthenticated()) {
-      const isPresent = this.selectedItemArray2.find(item => {
-        abc = this.selectedItemArray2.indexOf(item);
+      const isPresent = this.selectedItemArray.find( item => {
+        abc = this.selectedItemArray.indexOf(item);
         return item._id === x._id;
-      });
+      })
       if (isPresent) {
-        this.selectedItemArray2[abc].quantity++;
-        this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
+        this.selectedItemArray[abc].quantity++;
+        this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
         this.total += x.price;
-        this.storageService.setSessionStorage('total', this.total);
+        this.storageService.setLocaStorage('total', this.total);
       }
       else {
         x.quantity = 1;
         this.selectedItemArray.push(x);
-        this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
-        this.selectedItemArray2 = this.storageService.getSessionStorage('cartItem');
+        this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
         this.total += x.price;
-        this.storageService.setSessionStorage('total', this.total);
+        this.storageService.setLocaStorage('total', this.total);
         this.plusminus = true;
       }
     }
@@ -98,21 +95,21 @@ export class ProductsComponent implements OnInit {
   }
 
   increaseQuantity(select): void {
-    this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity++;
-    this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
+    this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
+    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     this.total += select.price;
-    this.storageService.setSessionStorage('total', this.total);
+    this.storageService.setLocaStorage('total', this.total);
   }
   decreaseQuantity(select): void {
-    this.selectedItemArray2[this.selectedItemArray2.indexOf(select)].quantity--;
-    this.storageService.setSessionStorage('cartItem', this.selectedItemArray2);
+    this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
+    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     if (select.quantity == 0) {
-      this.selectedItemArray2.splice(this.selectedItemArray2.indexOf(select), 1);
-      this.selectedItemArray = this.selectedItemArray2;
-      this.storageService.setSessionStorage('cartItem', this.selectedItemArray);
+      this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
+      this.selectedItemArray = this.selectedItemArray;
+      this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     }
     this.total -= select.price;
-    this.storageService.setSessionStorage('total', this.total);
+    this.storageService.setLocaStorage('total', this.total);
   }
 
   confirmOrder(): void {

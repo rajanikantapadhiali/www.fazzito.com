@@ -9,7 +9,7 @@
   <div class="card" id="cart">
     <div class="card-header bg-info text-white">You Have (4) items In Your Cart <span style="float:right;cursor: pointer;"
         (click)="addMoreItems()"> Add More Items</span></div>
-    <div class="card-body" *ngFor='let selectedItem of selectedItemArray2'>
+    <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
       <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
           style="height:50px;width: 50px"></span><span>{{selectedItem?.productName}}</span><span><i class="fa fa-plus" (click)='increaseQuantity(selectedItem)'></i>{{'
         '+selectedItem.quantity+' '}}<i class="fa fa-minus" (click)='decreaseQuantity(selectedItem)'></i></span><span>{{selectedItem?.price}}</span><span><i
@@ -35,7 +35,7 @@
               <div class="card col-md-4" *ngFor="let a of newAddressArray" style="height:270px;margin-left: 5px;margin-top: 5px">
                 <div class="card-header bg-success text-white">
                   <form>
-                    <input type="checkbox" name="selectAddresss" [(ngModel)]="selectAddresss">Select Address for Delivery
+                    <input type="radio" name="selectAddresss" [(ngModel)]="selectAddresss" value="Select Address for Delivery">
                   </form>
                 </div>
                 <div class="card-body">
