@@ -7,7 +7,7 @@
     </ul>
     <img src="../assets/image/Logo.png">
     <ul class="linkr">
-        <li *ngIf="itemNo"><i class="fa fa-cart-arrow-down" style="font-size:20px"></i><a routerLink="cart">&nbsp;cart&nbsp;({{noOfItem}})</a></li>
+        <li *ngIf="cart"><i class="fa fa-cart-arrow-down" style="font-size:20px"></i><a routerLink="cart">&nbsp;cart&nbsp;({{noOfItem}})</a></li>
         <li (click)="myAccount()" *ngIf="cart"><span class="fa fa-user"></span><span style="color: rgb(39, 95, 151);font-family: Arial, Helvetica, sans-serif;cursor: pointer;"> {{user_name}}</span></li>
         <li (click)="showLogin()" *ngIf="!cart"><span style="color: rgb(39, 95, 151);font-family: Arial, Helvetica, sans-serif;cursor: pointer;">LOGIN</span></li>
         <li><a routerLink="contact">CONTACT</a></li>

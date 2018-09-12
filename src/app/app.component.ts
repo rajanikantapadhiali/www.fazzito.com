@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { Event, Router, NavigationStart, NavigationEnd, } from '@angular/router';
+import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AppService } from './app.service';
 import { StorageService } from './storage.service';
@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   user_name: string;
   show: boolean = false;
   noOfItem: number;
-  itemNo: boolean = false;
  
   constructor(private router: Router, private _appservice: AppService, private _storageService: StorageService) {
     this.router.events.subscribe((routerEvent: Event) => {
@@ -27,13 +26,20 @@ export class AppComponent implements OnInit {
       if (routerEvent instanceof NavigationEnd) {
         this.showLoadingIndicator = false;
       }
-    })
+    });
   }
   
   ngOnInit() {
     this._appservice.todo.subscribe(data => {
       this.showLogin();
-    })
+    });
+
+    this._appservice.noOfItem.subscribe(data => {
+      this.noOfItem = data;
+    });
+
+    this._appservice.changeNoOfItem(this._storageService.getLocalStorage('cartItem').length);
+    
     if (this._storageService.getSessionStorage('current_user')) {
       let user: any = this._storageService.getSessionStorage('current_user');
       this.cart = true;
@@ -41,15 +47,7 @@ export class AppComponent implements OnInit {
     }
     this.allUsers = this._storageService.getLocalStorage('all_users');
   }
-  ngDoCheck() {
-    this.noOfItem = this._storageService.getLocalStorage('cartItem').length;
-    if(this.noOfItem > 0){
-      this.itemNo = true;
-    }
-    else {
-      this.itemNo = false;
-    }
-  }
+  
 
   public showLogin(): void {
     document.getElementById('signupModal').style.marginRight = "-500px";
@@ -116,8 +114,6 @@ export class AppComponent implements OnInit {
       document.getElementById('myAccount').style.display = "block";
       return;
     }
-    
-   
   }
 
   logout(): void {

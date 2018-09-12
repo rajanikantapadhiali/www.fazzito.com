@@ -3,6 +3,7 @@ import { StorageService } from '../storage.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,9 +17,10 @@ export class CartComponent implements OnInit {
   currentUser: string;
   phoneNo: number;
   newAddressArray: any[] = [];
+  noOfItem: number;
 
   constructor(private storageService: StorageService,
-     private router: Router, private route: ActivatedRoute) { }
+     private router: Router, private route: ActivatedRoute, private _appService: AppService) { }
 
   ngOnInit() {
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
@@ -30,6 +32,11 @@ export class CartComponent implements OnInit {
       this.showDeliveryAddress();
     }
     this.newAddressArray = this.storageService.getLocalStorage('address');
+
+    this._appService.noOfItem.subscribe(data => {
+      this.noOfItem = data;
+    });
+    this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
   }
 
   increaseQuantity(select): void {
@@ -45,6 +52,7 @@ export class CartComponent implements OnInit {
       this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
       this.selectedItemArray = this.selectedItemArray;
       this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+      this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
     this.total -= select.price;
     this.storageService.setLocaStorage('total', this.total);
@@ -55,6 +63,7 @@ export class CartComponent implements OnInit {
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
     this.total -= select.quantity * select.price;
     this.storageService.setLocaStorage('total', this.total);
+    this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
   }
 
   showCart(): void {

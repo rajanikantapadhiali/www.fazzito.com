@@ -58,7 +58,10 @@ export class ProductsComponent implements OnInit {
       this.total = 0;
       this.storageService.setLocaStorage('total', this.total);
     }
+
+    this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
   }
+
   logIn() {
     this._appservice.eventGenerate(null);
   }
@@ -87,6 +90,7 @@ export class ProductsComponent implements OnInit {
         this.total += x.price;
         this.storageService.setLocaStorage('total', this.total);
         this.plusminus = true;
+        this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
       }
     }
     else {
@@ -107,6 +111,7 @@ export class ProductsComponent implements OnInit {
       this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
       this.selectedItemArray = this.selectedItemArray;
       this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+      this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
     this.total -= select.price;
     this.storageService.setLocaStorage('total', this.total);

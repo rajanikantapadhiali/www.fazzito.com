@@ -7,7 +7,7 @@
   </div>
 
   <div class="card" id="cart">
-    <div class="card-header bg-info text-white">You Have (4) items In Your Cart <span style="float:right;cursor: pointer;"
+    <div class="card-header bg-info text-white">You Have ({{noOfItem}}) items In Your Cart <span style="float:right;cursor: pointer;"
         (click)="addMoreItems()"> Add More Items</span></div>
     <div class="card-body" *ngFor='let selectedItem of selectedItemArray'>
       <span *ngIf='selectedItem'><img src="{{selectedItem.images[0]?.imageUrl?'https://fazzito.com/api'+ selectedItem.images[0]?.imageUrl:'/assets/image/placeHolderImageMenu.png'}}"
