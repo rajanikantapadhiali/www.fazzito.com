@@ -13,7 +13,7 @@ export class AppService {
 
     public readonly todo: Observable<any> = this._todo.asObservable();
     public readonly noOfItem: Observable<any> = this._noOfItem.asObservable();
-    public readonly totalPrice: Observable<any> = this._totalPrice.asObservable();
+    public totalPrice: Observable<any> = this._totalPrice.asObservable();
 
     public eventGenerate(data) {
         this._todo.next(data);

@@ -49,14 +49,15 @@ export class ProductsComponent implements OnInit {
           };
         })
       });
+
+      this._appservice.totalPrice.subscribe(data => {
+        this.total = data;
+      });
+
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
+   
     if (this.selectedItemArray.length > 0) {
         this.plusminus = true;
-        this.total = this.storageService.getLocalStorage('total');
-    }
-    else { 
-      this.total = 0;
-      this.storageService.setLocaStorage('total', this.total);
     }
 
     this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
@@ -80,15 +81,13 @@ export class ProductsComponent implements OnInit {
       if (isPresent) {
         this.selectedItemArray[abc].quantity++;
         this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-        this.total += x.price;
-        this.storageService.setLocaStorage('total', this.total);
+        this._appservice.changeTotalPrice(this.total += x.price);
       }
       else {
         x.quantity = 1;
         this.selectedItemArray.push(x);
         this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-        this.total += x.price;
-        this.storageService.setLocaStorage('total', this.total);
+        this._appservice.changeTotalPrice(this.total += x.price);
         this.plusminus = true;
         this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
       }
@@ -101,8 +100,7 @@ export class ProductsComponent implements OnInit {
   increaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-    this.total += select.price;
-    this.storageService.setLocaStorage('total', this.total);
+    this._appservice.changeTotalPrice(this.total += select.price);
   }
   decreaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
@@ -113,8 +111,7 @@ export class ProductsComponent implements OnInit {
       this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
       this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
-    this.total -= select.price;
-    this.storageService.setLocaStorage('total', this.total);
+    this._appservice.changeTotalPrice(this.total -= select.price);
   }
 
   confirmOrder(): void {

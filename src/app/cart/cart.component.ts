@@ -26,7 +26,6 @@ export class CartComponent implements OnInit {
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
     this.currentUser = this.storageService.getSessionStorage('current_user').firstname;
     this.phoneNo = this.storageService.getSessionStorage('current_user').phone;
-    this.total = this.storageService.getLocalStorage('total');
 
     if(this.route.snapshot.queryParamMap.has('confirmOrder')){
       this.showDeliveryAddress();
@@ -36,14 +35,18 @@ export class CartComponent implements OnInit {
     this._appService.noOfItem.subscribe(data => {
       this.noOfItem = data;
     });
+    
+    this._appService.totalPrice.subscribe(data => {
+      this.total = data;
+    });
+  
     this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
   }
 
   increaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-    this.total += select.price;
-    this.storageService.setLocaStorage('total', this.total);
+    this._appService.changeTotalPrice(this.total += select.price);
   }
   decreaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
@@ -54,15 +57,13 @@ export class CartComponent implements OnInit {
       this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
       this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
-    this.total -= select.price;
-    this.storageService.setLocaStorage('total', this.total);
+    this._appService.changeTotalPrice(this.total -= select.price);
 
   }
   deleteItem(select): void {
     this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-    this.total -= select.quantity * select.price;
-    this.storageService.setLocaStorage('total', this.total);
+    this._appService.changeTotalPrice(this.total -= select.quantity * select.price);
     this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
   }
 
