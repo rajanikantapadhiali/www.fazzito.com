@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Event, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AppService } from './app.service';
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   user_name: string;
   show: boolean = false;
   noOfItem: number;
- 
+
   constructor(private router: Router, private _appservice: AppService, private _storageService: StorageService) {
     this.router.events.subscribe((routerEvent: Event) => {
       if (routerEvent instanceof NavigationStart) {
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
     this._appservice.todo.subscribe(data => {
       this.showLogin();
@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     });
 
     this._appservice.changeNoOfItem(this._storageService.getLocalStorage('cartItem').length);
-    
+
     if (this._storageService.getSessionStorage('current_user')) {
       let user: any = this._storageService.getSessionStorage('current_user');
       this.cart = true;
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     }
     this.allUsers = this._storageService.getLocalStorage('all_users');
   }
-  
+
 
   public showLogin(): void {
     document.getElementById('signupModal').style.marginRight = "-500px";
@@ -103,13 +103,13 @@ export class AppComponent implements OnInit {
   }
 
   myAccount(): void {
-    if(!this.show){
+    if (!this.show) {
       this.show = true;
       document.getElementById('myAccount').style.display = "none";
       return;
     }
 
-    if(this.show){
+    if (this.show) {
       this.show = false;
       document.getElementById('myAccount').style.display = "block";
       return;

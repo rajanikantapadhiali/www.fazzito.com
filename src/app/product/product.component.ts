@@ -61,6 +61,7 @@ export class ProductsComponent implements OnInit {
     }
 
     this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
+
   }
 
   logIn() {

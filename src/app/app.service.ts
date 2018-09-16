@@ -27,6 +27,7 @@ export class AppService {
         this._totalPrice.next(data);
     }
 
+
    
    
    
