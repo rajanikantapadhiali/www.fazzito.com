@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AppService } from '../app.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cart',
@@ -16,18 +17,20 @@ export class CartComponent implements OnInit {
   total: number = 0;
   currentUser: string;
   phoneNo: number;
-  newAddressArray: any[] = [];
+  newAddressArray: any;
   noOfItem: number;
 
   constructor(private storageService: StorageService,
-     private router: Router, private route: ActivatedRoute, private _appService: AppService) { }
+    private router: Router, private route: ActivatedRoute,
+    private _appService: AppService,
+    private httpClient: HttpClient,) { }
 
   ngOnInit() {
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
     this.currentUser = this.storageService.getSessionStorage('current_user').firstname;
     this.phoneNo = this.storageService.getSessionStorage('current_user').phone;
 
-    if(this.route.snapshot.queryParamMap.has('confirmOrder')){
+    if (this.route.snapshot.queryParamMap.has('confirmOrder')) {
       this.showDeliveryAddress();
     }
     this.newAddressArray = this.storageService.getLocalStorage('address');
@@ -35,12 +38,16 @@ export class CartComponent implements OnInit {
     this._appService.noOfItem.subscribe(data => {
       this.noOfItem = data;
     });
-    
+
     this._appService.totalPrice.subscribe(data => {
       this.total = data;
     });
-  
+
     this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
+
+    this.httpClient.get('http://localhost:3000/address').subscribe(data => {
+      this.newAddressArray = data;
+    });
   }
 
   increaseQuantity(select): void {
@@ -128,16 +135,19 @@ export class CartComponent implements OnInit {
   }
 
   addAddress(addNewAddress: NgForm): void {
-    this.newAddressArray.push(addNewAddress.value);
-    this.storageService.setLocaStorage('address',this.newAddressArray);
+    this.httpClient.post('http://localhost:3000/address', addNewAddress.value)
+      .subscribe(data => {
+        console.log(data);
+      })
     document.getElementById('ads').style.display = 'none';
   }
   editAddress(address): void {
     document.getElementById('ads').style.display = 'block';
   }
   deleteAddress(address): void {
-    this.newAddressArray.splice(this.newAddressArray.indexOf(address),1);
-    this.storageService.setLocaStorage('address', this.newAddressArray);
+   this.httpClient.delete(`${'http://localhost:3000/address'}/${address.id}`).subscribe(data => {
+     console.log(data);
+   });
   }
   addressTab(): void {
     this.showDeliveryAddress();
