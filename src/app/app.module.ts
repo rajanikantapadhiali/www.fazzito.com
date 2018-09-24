@@ -21,7 +21,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'menu',
     component: MenuComponent,
-    resolve: { shyam: ProductResolverService} },
+    resolve: { ram: ProductResolverService} },
   { path: 'menu/:_id', 
     component: ProductsComponent,
     resolve: { ram: ProductResolverService} },

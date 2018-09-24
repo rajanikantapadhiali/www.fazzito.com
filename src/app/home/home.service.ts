@@ -9,7 +9,7 @@ export class HomeService {
   }
   
   getItem(){
-   return this._http.get("https://fazzito.com/api/category");
+    return this._http.get("https://fazzito.com/api/category");
   }
   
 }

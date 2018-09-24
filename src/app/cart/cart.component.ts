@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
     this.currentUser = this.storageService.getSessionStorage('current_user').firstname;
     this.phoneNo = this.storageService.getSessionStorage('current_user').phone;
-
+    this.total = this.storageService.getLocalStorage('totalPrice');
     if (this.route.snapshot.queryParamMap.has('confirmOrder')) {
       this.showDeliveryAddress();
     }
@@ -39,9 +39,7 @@ export class CartComponent implements OnInit {
       this.noOfItem = data;
     });
 
-    this._appService.totalPrice.subscribe(data => {
-      this.total = data;
-    });
+  
 
     this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
 
@@ -53,7 +51,8 @@ export class CartComponent implements OnInit {
   increaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-    this._appService.changeTotalPrice(this.total += select.price);
+    this.total += select.price;
+    this.storageService.setLocaStorage('totalPrice', this.total);
   }
   decreaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
@@ -64,13 +63,15 @@ export class CartComponent implements OnInit {
       this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
       this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
-    this._appService.changeTotalPrice(this.total -= select.price);
+    this.total -= select.price;
+    this.storageService.setLocaStorage('totalPrice', this.total);
 
   }
   deleteItem(select): void {
     this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-    this._appService.changeTotalPrice(this.total -= select.quantity * select.price);
+    this.total -= select.quantity * select.price
+    this.storageService.setLocaStorage('totalPrice', this.total);
     this._appService.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
   }
 

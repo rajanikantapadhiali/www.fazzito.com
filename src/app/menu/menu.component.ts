@@ -14,11 +14,7 @@ export class MenuComponent implements OnInit {
    }
    
   ngOnInit() {
-    this.homeservice.getItem()
-    .subscribe(data => {
-      this.data = data;
-      this.data = this.activatedRoute.snapshot.data['shyam'];
-    });
+    this.data = this.activatedRoute.snapshot.data['ram'];
   }
 
 }

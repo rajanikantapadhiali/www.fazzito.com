@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../home/home.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../app.service';
 import { StorageService } from '../storage.service';
@@ -24,37 +23,31 @@ interface Response {
   styleUrls: ['./product.component.css']
 })
 export class ProductsComponent implements OnInit {
-  categoryData: Array<Product>;
-  productData: any;
+  categoryData: Array<Response>;
+  productData: Product;
   id: number;
   select: object;
   total: number = 0;
   plusminus: boolean = false;
   selectedItemArray: any[] = [];
 
-  constructor(private homeservice: HomeService, private activatedRoute: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
     private _appservice: AppService, private storageService: StorageService,
     private router: Router) {
     this.id = this.activatedRoute.snapshot.params['_id'];
-    this.productData = this.activatedRoute.snapshot.data['ram'];
   }
 
   ngOnInit() {
-    this.homeservice.getItem()
-      .subscribe((res: Response) => {
-        this.categoryData = res.data;
-        this.categoryData.map((item: any) => {
+    this.categoryData = this.activatedRoute.snapshot.data['ram'].data;
+        
+    this.categoryData.map((item: any) => {
           if (item._id === this.id) {
             this.productData = item.products;
           };
         })
-      });
-
-      this._appservice.totalPrice.subscribe(data => {
-        this.total = data;
-      });
 
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
+    this.total = this.storageService.getLocalStorage('totalPrice');
    
     if (this.selectedItemArray.length > 0) {
         this.plusminus = true;
@@ -82,13 +75,15 @@ export class ProductsComponent implements OnInit {
       if (isPresent) {
         this.selectedItemArray[abc].quantity++;
         this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-        this._appservice.changeTotalPrice(this.total += x.price);
+        this.total += x.price;
+        this.storageService.setLocaStorage("totalPrice", this.total);
       }
       else {
         x.quantity = 1;
         this.selectedItemArray.push(x);
         this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-        this._appservice.changeTotalPrice(this.total += x.price);
+        this.total += x.price;
+        this.storageService.setLocaStorage("totalPrice", this.total);
         this.plusminus = true;
         this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
       }
@@ -101,7 +96,8 @@ export class ProductsComponent implements OnInit {
   increaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
     this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
-    this._appservice.changeTotalPrice(this.total += select.price);
+    this.total += select.price;
+    this.storageService.setLocaStorage("totalPrice", this.total);
   }
   decreaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
@@ -112,7 +108,8 @@ export class ProductsComponent implements OnInit {
       this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
       this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
-    this._appservice.changeTotalPrice(this.total -= select.price);
+    this.total -= select.price;
+    this.storageService.setLocaStorage("totalPrice", this.total);
   }
 
   confirmOrder(): void {

@@ -9,7 +9,7 @@ import { HomeService } from './home.service';
 export class HomeComponent implements OnInit {
 
   data: any = [];
-  select: object;
+  select: any;
   toggle: boolean = false;
   toggle2: boolean = true;
 
@@ -28,8 +28,7 @@ export class HomeComponent implements OnInit {
       });
   }
   selectedItem(x): void {
-    this.select = x.productName;
-    console.log('this.select: ', this.select);
+    this.select = x;
     this.toggle = true;
     this.toggle2 = false;
   }
