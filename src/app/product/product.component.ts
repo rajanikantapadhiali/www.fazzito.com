@@ -24,7 +24,7 @@ interface Response {
 })
 export class ProductsComponent implements OnInit {
   categoryData: Array<Response>;
-  productData: Product;
+  productData: any;
   id: number;
   select: object;
   total: number = 0;
@@ -41,10 +41,10 @@ export class ProductsComponent implements OnInit {
     this.categoryData = this.activatedRoute.snapshot.data['ram'].data;
         
     this.categoryData.map((item: any) => {
-          if (item._id === this.id) {
-            this.productData = item.products;
-          };
-        })
+      if (item._id === this.id) {
+        this.productData = item.products;
+      };
+    })
 
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
     this.total = this.storageService.getLocalStorage('totalPrice');
@@ -116,5 +116,17 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['/cart'], {
       queryParams: { 'confirmOrder': true }
     });
+  }
+
+  showNoneVeg(): void {
+   
+  }
+
+  showVeg(): void {
+    
+  }
+
+  showAll(): void {
+   
   }
 }

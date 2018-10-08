@@ -15,6 +15,7 @@ import { MealplansComponent } from './mealplans/mealplans.component';
 import { CartComponent } from './cart/cart.component';
 import { ProductResolverService } from './productResolver.service';
 import { AppService } from './app.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
   { path: 'booktable', component: BooktableComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'mealplan', component: MealplansComponent },
-  { path: 'cart', component: CartComponent }
+  { path: 'cart', component: CartComponent },
+  { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     BooktableComponent,
     ContactComponent,
     MealplansComponent,
-    CartComponent
+    CartComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes), FormsModule
