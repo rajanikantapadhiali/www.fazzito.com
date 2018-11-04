@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
 
     if (!user) {
       this.allUsers.push(signupForm.value);
-      this._storageService.setLocaStorage('all_users', this.allUsers);
+      this._storageService.setLocalStorage('all_users', this.allUsers);
       this.allUsers = this._storageService.getLocalStorage('all_users');
     } else {
       alert("User is already exists!");

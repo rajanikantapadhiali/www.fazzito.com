@@ -22,7 +22,7 @@ export class StorageService {
         }
     }
 
-    public setLocaStorage(key: string, value: any) {
+    public setLocalStorage(key: string, value: any) {
         value = JSON.stringify(value);
         localStorage.setItem(key, value);
     }

@@ -47,7 +47,7 @@ export class ProductsComponent implements OnInit {
     })
 
     this.selectedItemArray = this.storageService.getLocalStorage('cartItem');
-    this.total = this.storageService.getLocalStorage('totalPrice');
+    this.total = this.storageService.getLocalStorage("totalPrice");
    
     if (this.selectedItemArray.length > 0) {
         this.plusminus = true;
@@ -74,16 +74,16 @@ export class ProductsComponent implements OnInit {
       })
       if (isPresent) {
         this.selectedItemArray[abc].quantity++;
-        this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+        this.storageService.setLocalStorage('cartItem', this.selectedItemArray);
         this.total += x.price;
-        this.storageService.setLocaStorage("totalPrice", this.total);
+        this.storageService.setLocalStorage("totalPrice", this.total);
       }
       else {
         x.quantity = 1;
         this.selectedItemArray.push(x);
-        this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+        this.storageService.setLocalStorage('cartItem', this.selectedItemArray);
         this.total += x.price;
-        this.storageService.setLocaStorage("totalPrice", this.total);
+        this.storageService.setLocalStorage("totalPrice", this.total);
         this.plusminus = true;
         this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
       }
@@ -95,21 +95,21 @@ export class ProductsComponent implements OnInit {
 
   increaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity++;
-    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+    this.storageService.setLocalStorage('cartItem', this.selectedItemArray);
     this.total += select.price;
-    this.storageService.setLocaStorage("totalPrice", this.total);
+    this.storageService.setLocalStorage("totalPrice", this.total);
   }
   decreaseQuantity(select): void {
     this.selectedItemArray[this.selectedItemArray.indexOf(select)].quantity--;
-    this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+    this.storageService.setLocalStorage('cartItem', this.selectedItemArray);
     if (select.quantity == 0) {
       this.selectedItemArray.splice(this.selectedItemArray.indexOf(select), 1);
       this.selectedItemArray = this.selectedItemArray;
-      this.storageService.setLocaStorage('cartItem', this.selectedItemArray);
+      this.storageService.setLocalStorage('cartItem', this.selectedItemArray);
       this._appservice.changeNoOfItem(this.storageService.getLocalStorage('cartItem').length);
     }
     this.total -= select.price;
-    this.storageService.setLocaStorage("totalPrice", this.total);
+    this.storageService.setLocalStorage("totalPrice", this.total);
   }
 
   confirmOrder(): void {
